@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  quickbite-user:
+    build: ./user-service
+    ports:
+      - "8081:8081"
+    environment:
+      - DB_HOST=database
+      - DB_PORT=3306
+      - DB_NAME=quickbite_user
+      - DB_USERNAME=quickbite_user
+      - DB_PASSWORD=quickbite_pass
+    entrypoint: []
+    command: ["java","-cp","/app/app.jar","org.springframework.boot.loader.JarLauncher"]
+    networks:
+      - quickbite-net
+
+  quickbite-restaurant:
+    build: ./restaurant-service
+    ports:
+      - "8082:8082"
+    environment:
+      - DB_HOST=database
+      - DB_PORT=3306
+      - DB_NAME=quickbite_restaurant
+      - DB_USERNAME=quickbite_restaurant
+      - DB_PASSWORD=quickbite_pass
+    entrypoint: []
+    command: ["java","-cp","/app/app.jar","org.springframework.boot.loader.JarLauncher"]
+    networks:
+      - quickbite-net
+
+  quickbite-order:
+    build: ./order-service
+    ports:
+      - "8083:8083"
+    environment:
+      - DB_HOST=database
+      - DB_PORT=3306
+      - DB_NAME=quickbite_order
+      - DB_USERNAME=quickbite_order
+      - DB_PASSWORD=quickbite_pass
+    entrypoint: []
+    command: ["java","-cp","/app/app.jar","org.springframework.boot.loader.JarLauncher"]
+    networks:
+      - quickbite-net
+
+  quickbite-notification:
+    build: ./notification-service
+    ports:
+      - "8084:8084"
+    environment:
+      - DB_HOST=database
+      - DB_PORT=3306
+      - DB_NAME=quickbite_notification
+      - DB_USERNAME=quickbite_notification
+      - DB_PASSWORD=quickbite_pass
+    entrypoint: []
+    command: ["java","-cp","/app/app.jar","org.springframework.boot.loader.JarLauncher"]
+    networks:
+      - quickbite-net
+
+networks:
+  quickbite-net:
+    external: true
