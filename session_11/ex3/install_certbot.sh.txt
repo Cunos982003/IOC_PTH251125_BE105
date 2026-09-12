@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# 1. Cập nhật danh sách gói phần mềm trên Ubuntu
+sudo apt update
+
+# 2. Cài đặt certbot và plugin certbot cho Nginx
+sudo apt install certbot python3-certbot-nginx -y
+
+# 3. Chạy lệnh xin cấp phát SSL tự động và cấu hình Nginx
+sudo certbot --nginx -d api.my-ecommerce.com
