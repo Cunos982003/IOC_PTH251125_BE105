@@ -1,0 +1,24 @@
+Giải thích ý nghĩa các thông số Timeout
+proxy_read_timeout 120s; (Quan trọng nhất cho bài tập này):
+Thời gian tối đa Nginx chờ nhận phản hồi (response) từ phía ứng dụng Backend (Spring Boot) giữa hai thao tác đọc nối tiếp. Việc tăng giá trị này lên 120s giúp Nginx giữ kết nối chờ tác vụ export báo cáo (mất khoảng 90 giây) hoàn thành mà không bị ngắt ngắt giữa chừng và trả về lỗi 504 Gateway Time-out.
+
+proxy_connect_timeout 120s;:
+Thời gian tối đa Nginx cố gắng thiết lập kết nối ban đầu tới ứng dụng Backend. Nếu quá 120 giây mà không kết nối thành công, Nginx sẽ báo lỗi timeout.
+
+proxy_send_timeout 120s;:
+Thời gian tối đa để Nginx truyền tiếp request từ phía client tới ứng dụng Backend.
+
+Quy trình thực hiện trên Server
+Cập nhật file cấu hình:
+Mở file cấu hình Nginx của bạn (ví dụ: /etc/nginx/sites-available/app.conf) và thêm các chỉ thị timeout vào khối location /api/export/.
+
+Kiểm tra cú pháp cấu hình:
+
+Bash
+sudo nginx -t
+Kết quả thành công: Terminal hiển thị syntax is ok và test is successful.
+
+Reload lại dịch vụ Nginx:
+
+Bash
+sudo systemctl reload nginx
