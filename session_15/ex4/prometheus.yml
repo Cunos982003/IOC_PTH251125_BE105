@@ -1,0 +1,25 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  - "alert_rules.yml"
+
+scrape_configs:
+  - job_name: 'microservices'
+    file_sd_configs:
+      - files:
+          - 'targets.json'
+        refresh_interval: 5m
+
+  - job_name: 'quickbite-backend'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets:
+          - 'order-service:8686'
+
+  - job_name: 'node'
+    metrics_path: '/metrics'
+    static_configs:
+      - targets:
+          - 'node-exporter:9100'
